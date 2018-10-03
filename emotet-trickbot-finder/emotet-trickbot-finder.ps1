@@ -168,9 +168,10 @@ function removeTasks() {
 ##############################################################################
 ## MAIN
 
-Get-Process | ? { $_.Path -match '\\mttvca\.exe' } | Stop-Process -Force -Verbose
-Get-Process | ? { $_.Path -match '\\mssvca\.exe' } | Stop-Process -Force -Verbose
-Get-Process | ? { $_.Path -match '\\stsvc\.exe' } | Stop-Process -Force -Verbose
+# Terminate processes using these executables
+# Get-Process | ? { $_.Path -match '\\mttvca\.exe' } | Stop-Process -Force -Verbose
+# Get-Process | ? { $_.Path -match '\\mssvca\.exe' } | Stop-Process -Force -Verbose
+# Get-Process | ? { $_.Path -match '\\stsvc\.exe' } | Stop-Process -Force -Verbose
 
 removeRegistryValues
 removeFiles
