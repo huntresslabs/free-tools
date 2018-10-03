@@ -1,9 +1,10 @@
 # Powershell script to remove Emotet and Trickbot services and scheduled
 # tasks.
 
-# If you have an active Emotet/Trickbot infection you'll want to stop
+# If you have an active Emotet/Trickbot infection, you'll want to stop
 # the spread before running this script.
 
+# This script is based on the work of the Bytes Computer & Network Solutions team.
 
 # This is free and unencumbered software released into the public domain.
 
