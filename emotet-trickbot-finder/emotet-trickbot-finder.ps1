@@ -40,7 +40,7 @@
 # Task: msnEtcs - c:\task2.bat
 # Task: msntcs - c:\task1.bat
 
-# C:\Users\admin> powershell -executionpolicy bypass -f emotet_trickbot_finder.ps1 delete
+# C:\Users\admin> powershell -executionpolicy bypass -f emotet_trickbot_finder.ps1 remove
 # Service: 12345678 (12345678) - c:\12345678.bat
 # VERBOSE: Performing operation "Stop-Service" on Target "12345678 (12345678)".
 # Attempting to stop c:\12345678.bat...
