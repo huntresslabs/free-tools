@@ -9,7 +9,9 @@ C:\Users\admin> powershell -executionpolicy bypass -f emotet_trickbot_finder.ps1
 [*] Looking for process by name: mssvca
 [*] Process: mssvca.exe (mssvca) - c:\windows\mssvca.exe
 
-Name           Used (GB)     Free (GB) Provider      Root                                               CurrentLocation ----           ---------     --------- --------      ----                                               --------------- HKU                                    Registry      HKEY_USERS
+Name           Used (GB)     Free (GB) Provider      Root                                               CurrentLocation
+----           ---------     --------- --------      ----                                               ---------------
+HKU                                    Registry      HKEY_USERS
 [*] Found registry value: mttvca
 [*] Service: 12345678 (12345678) - c:\12345678.exe
 [*] Service: yxyxzeea (NewService1) - c:\NewService1.bat
@@ -27,7 +29,9 @@ VERBOSE: Performing operation "Stop-Process" on Target "mssvca (3320)".
 [!] Removing c:\windows\mssvca.exe...
 VERBOSE: Performing operation "Remove File" on Target "C:\windows\mssvca.exe".
 
-Name           Used (GB)     Free (GB) Provider      Root                                               CurrentLocation ----           ---------     --------- --------      ----                                               --------------- HKU                                    Registry      HKEY_USERS
+Name           Used (GB)     Free (GB) Provider      Root                                               CurrentLocation
+----           ---------     --------- --------      ----                                               ---------------
+HKU                                    Registry      HKEY_USERS
 [*] Found registry value: mttvca
 [!] Removing registry value: mttvca
 VERBOSE: Performing operation "Remove Property" on Target "Item:
