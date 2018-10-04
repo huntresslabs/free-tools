@@ -56,6 +56,9 @@
 # command line argument for removing the services/tasks/files
 Param([String]$remove)
 
+##############################################################################
+## Add known Emotet/Trickbot files, services, scheduled tasks, etc. below
+
 # various files to remove
 $filesToRemove = @(
     'c:\stsvc.exe'
@@ -66,25 +69,34 @@ $valueNameMatches = @(
     'mttvca'
 )
 
-# service to remove
-$badSvcs = @()
+# services to remove, initialize array
+$badServices = @()
 
 # Add Emotet numbered services
-$badSvcs += Get-Service | ? { $_.name -match '^[0-9]{6,20}$' }
+$badServices += Get-Service | ? { $_.name -match '^[0-9]{6,20}$' }
 
 # Add Trickbot services, match the display name
-$badSvcs += Get-Service | ? { $_.DisplayName -match '^NewService' }
-$badSvcs += Get-Service | ? { $_.DisplayName -match '^Service-Log' }
+$badServices += Get-Service | ? { $_.DisplayName -match '^NewService' }
+$badServices += Get-Service | ? { $_.DisplayName -match '^Service-Log' }
+
+# processes to terminate, initialize array
+$badProcesses = @()
+
+# add known Emotet/Trickbot processes
+$badProcesses += Get-Process | ? { $_.Path -match '\\mttvca\.exe' }
+$badProcesses += Get-Process | ? { $_.Path -match '\\mssvca\.exe' }
 
 # Trickbot tasks regex
 $badTasks = 'msnetcs|msntcs'
+
+
 
 ##############################################################################
 ## helper functions
 
 function deleteFile ($file) {
     if (Test-Path $file) {
-        Write-Output "Removing $file..."
+        Write-Output "[!] Removing $file..."
         Remove-Item $file -Force -Confirm:$false -Verbose -ErrorAction SilentlyContinue
     }
 }
@@ -92,7 +104,7 @@ function deleteFile ($file) {
 # terminate the process associated with the specified file
 function terminateProcess ($file) {
     if ($file -ne $null) {
-        Write-Output "Attempting to terminate process based on file path: '$file'..."
+        Write-Output "[*] Attempting to terminate process based on file path: '$file'..."
         Get-Process | ? { $_.Path -eq $file } | Stop-Process -Force -Confirm:$false -Verbose
     }
 }
@@ -102,8 +114,9 @@ function removeRegistryValues() {
     foreach ($v in $valueNameMatches) {
         $value = (Get-item HKU:\S-1-5-18\software\microsoft\windows\currentversion\run).property | ? { $_ -match $v }
         if ($value -ne $null) {
-            Write-Output "Found registry value: $value"
+            Write-Output "[*] Found registry value: $value"
             if ($remove -eq "remove") {
+                Write-Output "[!] Removing registry value: $value"
                 Remove-ItemProperty HKU:\S-1-5-18\software\Microsoft\Windows\CurrentVersion\Run -Name $value -Verbose -Force -Confirm:$false
             }
         }
@@ -120,14 +133,14 @@ function removeFiles(){
 }
 
 function removeServices() {
-    # Iterate over the services we found
-    foreach ($bSvc in $badSvcs) {
+    foreach ($bSvc in $badServices) {
         if ($bSvc -eq $null) { continue }
 
+        # get Win32_Service object matching on the service name
         $svcWmiObj = gwmi Win32_Service | ? { $_.name -eq $bSvc.name }
         if ($svcWmiObj -ne $null ) { $svcPath = $svcWmiObj | select -expand pathname -ErrorAction SilentlyContinue }
 
-        Write-Output "Service: $($bSvc.Name) ($($bSvc.DisplayName)) - $svcPath"
+        Write-Output "[*] Service: $($bSvc.Name) ($($bSvc.DisplayName)) - $svcPath"
 
         if ($remove -eq "remove") {
             $bSvc | Stop-Service -Force -Verbose -ErrorAction SilentlyContinue
@@ -139,6 +152,7 @@ function removeServices() {
 
             deleteFile $svcPath
 
+            Write-Output "[!] Deleting service: $($bSvc.Name)"
             cmd.exe /C sc.exe delete $bSvc.name
 
             remove-variable svcWmiObj,svcPath
@@ -148,19 +162,43 @@ function removeServices() {
 
 function removeTasks() {
     $AllSchedTasks = schtasks.exe /QUERY /V /FO CSV | ConvertFrom-CSV | ? { $_.TaskName -match $badTasks }
-    foreach ($stask in $allSchedTasks) {
+    foreach ($stask in $AllSchedTasks) {
         if ($stask -eq $null) { continue }
 
         $binToDel = $stask.'Task To Run'.Trim()
 
-        Write-Output "Task: $($stask.taskname.split('\')[-1]) - $binToDel"
+        Write-Output "[*] Task: $($stask.taskname.split('\')[-1]) - $binToDel"
 
         if ($remove -eq "remove") {
             terminateProcess $binToDel
 
             deleteFile $binToDel
 
+            Write-Output "[!] Deleting scheduled task: $($stask.taskname.split('\')[-1])"
             schtasks.exe /DELETE /TN $stask.taskname.split('\')[-1] /F
+        }
+    }
+}
+
+function removeProcesses() {
+    foreach($bProc in $badProcesses) {
+        if ($bProc -eq $null) { continue }
+
+        Write-Output "[*] Looking for process by name: $($bProc.ProcessName)"
+
+        # get Win32_Process object matching on the process name
+        $procWmiObj = gwmi Win32_Process | ? { $_.Name -match $bProc.ProcessName }
+        if ($procWmiObj -ne $null ) {
+            Write-Output "[*] Process: $($procWmiObj.Name) ($($bProc.ProcessName)) - $($procWmiObj.ExecutablePath)"
+
+            if ($remove -eq "remove") {
+                $bProc | Stop-Process -Force -Verbose -ErrorAction SilentlyContinue
+                Start-Sleep 1
+
+                deleteFile $procWmiObj.ExecutablePath
+
+                remove-variable procWmiObj
+            }
         }
     }
 }
@@ -168,11 +206,7 @@ function removeTasks() {
 ##############################################################################
 ## MAIN
 
-# Terminate processes using these executables
-# Get-Process | ? { $_.Path -match '\\mttvca\.exe' } | Stop-Process -Force -Verbose
-# Get-Process | ? { $_.Path -match '\\mssvca\.exe' } | Stop-Process -Force -Verbose
-# Get-Process | ? { $_.Path -match '\\stsvc\.exe' } | Stop-Process -Force -Verbose
-
+removeProcesses
 removeRegistryValues
 removeFiles
 removeServices
