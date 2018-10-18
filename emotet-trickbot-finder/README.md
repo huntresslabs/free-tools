@@ -2,6 +2,8 @@
 
 This Powershell script is designed to find and remove "common" Emotet and Trickbot footholds (services, scheduled tasks, etc.). The script can be modified to include new footholds you may encounter.
 
+_Many thanks to the Bytes Computer & Network Solutions team, this script is based on their work._
+
 By default, the script will display the service and tasks it finds.
 
 ```
