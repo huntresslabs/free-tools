@@ -87,7 +87,7 @@ $badProcesses += Get-Process | ? { $_.Path -match '\\mttvca\.exe' }
 $badProcesses += Get-Process | ? { $_.Path -match '\\mssvca\.exe' }
 
 # Trickbot tasks regex
-$badTasks = 'msnetcs|msntcs|sysnetsf'
+$badTasks = 'msnetcs|msntcs|sysnetsf|MsSystemWatcher'
 
 
 
