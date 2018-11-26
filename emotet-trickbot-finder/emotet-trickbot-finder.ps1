@@ -61,7 +61,8 @@ Param([String]$remove)
 
 # various files to remove
 $filesToRemove = @(
-    'c:\stsvc.exe'
+    'c:\stsvc.exe',
+    'c:\mswvc.exe'
 )
 
 # Run Key values to remove, string matching
@@ -85,6 +86,8 @@ $badProcesses = @()
 # add known Emotet/Trickbot processes
 $badProcesses += Get-Process | ? { $_.Path -match '\\mttvca\.exe' }
 $badProcesses += Get-Process | ? { $_.Path -match '\\mssvca\.exe' }
+$badProcesses += Get-Process | ? { $_.Path -match '\\mswvc\.exe' }
+$badProcesses += Get-Process | ? { $_.Path -match '\\mtwvc\.exe' }
 
 # Trickbot tasks regex
 $badTasks = 'msnetcs|msntcs|sysnetsf|MsSystemWatcher|netsys'
