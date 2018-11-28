@@ -79,6 +79,7 @@ $badServices += Get-Service | ? { $_.name -match '^[0-9]{6,20}$' }
 # Add Trickbot services, match the display name
 $badServices += Get-Service | ? { $_.DisplayName -match '^NewService' }
 $badServices += Get-Service | ? { $_.DisplayName -match '^Service-Log' }
+# **** Add the service commands we send here ****
 
 # processes to terminate, initialize array
 $badProcesses = @()
