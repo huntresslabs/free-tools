@@ -62,7 +62,8 @@ Param([String]$remove)
 # various files to remove
 $filesToRemove = @(
     'c:\stsvc.exe',
-    'c:\mswvc.exe'
+    'c:\mswvc.exe',
+    'c:\mtwvc.exe'
 )
 
 # Run Key values to remove, string matching
@@ -91,7 +92,7 @@ $badProcesses += Get-Process | ? { $_.Path -match '\\mswvc\.exe' }
 $badProcesses += Get-Process | ? { $_.Path -match '\\mtwvc\.exe' }
 
 # Trickbot tasks regex
-$badTasks = 'msnetcs|msntcs|sysnetsf|MsSystemWatcher|netsys'
+$badTasks = 'msnetcs|msntcs|sysnetsf|MsSystemWatcher|netsys|WinDotNet'
 
 
 
