@@ -145,17 +145,19 @@ function removeServices() {
         $svcWmiObj = gwmi Win32_Service | ? { $_.name -eq $bSvc.name }
         if ($svcWmiObj -ne $null ) { $svcPath = $svcWmiObj | select -expand pathname -ErrorAction SilentlyContinue }
 
-        Write-Output "[*] Service: $($bSvc.Name) ($($bSvc.DisplayName)) - $svcPath"
+        Write-Output "[*] Service: $($bSvc.Name) ($($bSvc.DisplayName)) - '$svcPath'"
 
         if ($remove -eq "remove") {
             $bSvc | Stop-Service -Force -Verbose -ErrorAction SilentlyContinue
             Start-Sleep 1
 
-            terminateProcess $svcPath
+            if ($svcPath -ne $null) {
+                terminateProcess $svcPath
 
-            Start-Sleep -Seconds 2
+                Start-Sleep -Seconds 2
 
-            deleteFile $svcPath
+                deleteFile $svcPath
+            }
 
             Write-Output "[!] Deleting service: $($bSvc.Name)"
             cmd.exe /C sc.exe delete $bSvc.name
