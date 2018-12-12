@@ -177,9 +177,11 @@ function removeTasks() {
         Write-Output "[*] Task: $($stask.taskname.split('\')[-1]) - $binToDel"
 
         if ($remove -eq "remove") {
-            terminateProcess $binToDel
+            if ($binToDel -ne $null) {
+                terminateProcess $binToDel
 
-            deleteFile $binToDel
+                deleteFile $binToDel
+            }
 
             Write-Output "[!] Deleting scheduled task: $($stask.taskname.split('\')[-1])"
             schtasks.exe /DELETE /TN $stask.taskname.split('\')[-1] /F
@@ -202,7 +204,9 @@ function removeProcesses() {
                 $bProc | Stop-Process -Force -Verbose -ErrorAction SilentlyContinue
                 Start-Sleep 1
 
-                deleteFile $procWmiObj.ExecutablePath
+                if ($procWmiObj.ExecutablePath -ne $null) {
+                    deleteFile $procWmiObj.ExecutablePath
+                }
 
                 remove-variable procWmiObj
             }
