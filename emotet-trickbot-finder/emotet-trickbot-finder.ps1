@@ -147,28 +147,33 @@ function removeServices() {
 
         # get Win32_Service object matching on the service name
         $svcWmiObj = gwmi Win32_Service | ? { $_.name -eq $bSvc.name }
-        if ($svcWmiObj -ne $null ) { $svcPath = $svcWmiObj | select -expand pathname -ErrorAction SilentlyContinue }
 
-        Write-Output "[*] Service: $($bSvc.Name) ($($bSvc.DisplayName)) - '$svcPath'"
+        if ($svcWmiObj -ne $null ) {
+            $svcPath = $svcWmiObj | select -expand pathname -ErrorAction SilentlyContinue
+            # $svcPath = $($svcWmiObj.PathName)
 
-        if ($remove -eq "remove") {
-            $bSvc | Stop-Service -Force -Verbose -ErrorAction SilentlyContinue
-            Start-Sleep 1
+            Write-Output "[*] Service: $($bSvc.Name) ($($bSvc.DisplayName)) - file: '$svcPath'"
 
-            if ($svcPath -ne $null) {
-                terminateProcess $svcPath
+            if ($remove -eq "remove") {
+                $bSvc | Stop-Service -Force -Verbose -ErrorAction SilentlyContinue
+                Start-Sleep 1
 
-                Start-Sleep -Seconds 2
+                if ($svcPath -ne $null) {
+                    terminateProcess $svcPath
 
-                deleteFile $svcPath
-            }
+                    Start-Sleep -Seconds 2
 
-            Write-Output "[!] Deleting service: $($bSvc.Name)"
-            cmd.exe /C sc.exe delete $bSvc.name
+                    deleteFile $svcPath
+                    remove-variable svcPath
+                }
 
-            remove-variable svcWmiObj,svcPath
+                Write-Output "[!] Deleting service: $($bSvc.Name)"
+                cmd.exe /C sc.exe delete $bSvc.name
+            } # end "remove"
+
+            remove-variable svcWmiObj
         }
-    }
+    } # end foreach
 }
 
 function removeTasks() {
