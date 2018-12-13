@@ -103,15 +103,16 @@ $badTasks = 'msnetcs|msntcs|sysnetsf|MsSystemWatcher|netsys|WinDotNet'
 ## helper functions
 
 function deleteFile ($file) {
-    if (Test-Path $file) {
-        Write-Output "[!] Removing $file..."
+    # only delete files
+    if (Test-Path -PathType Leaf $file) {
+        Write-Output "[!] Removing file '$file'..."
         Remove-Item $file -Force -Confirm:$false -Verbose -ErrorAction SilentlyContinue
     }
 }
 
 # terminate the process associated with the specified file
 function terminateProcess ($file) {
-    if ($file -ne $null) {
+    if (($file -ne $null) -and (Test-Path -PathType Leaf $file)) {
         Write-Output "[*] Attempting to terminate process based on file path: '$file'..."
         Get-Process | ? { $_.Path -eq $file } | Stop-Process -Force -Confirm:$false -Verbose
     }
