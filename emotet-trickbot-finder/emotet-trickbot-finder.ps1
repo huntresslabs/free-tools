@@ -56,6 +56,9 @@
 # command line argument for removing the services/tasks/files
 Param([String]$remove)
 
+# simplistic versioning
+$revisionDate = '12 December 2018'
+
 ##############################################################################
 ## Add known Emotet/Trickbot files, services, scheduled tasks, etc. below
 
@@ -91,7 +94,7 @@ $badProcesses += Get-Process | ? { $_.Path -match '\\mssvca\.exe' }
 $badProcesses += Get-Process | ? { $_.Path -match '\\mswvc\.exe' }
 $badProcesses += Get-Process | ? { $_.Path -match '\\mtwvc\.exe' }
 
-# Trickbot tasks regex
+# Trickbot scheduled task names regex
 $badTasks = 'msnetcs|msntcs|sysnetsf|MsSystemWatcher|netsys|WinDotNet'
 
 
@@ -216,6 +219,9 @@ function removeProcesses() {
 
 ##############################################################################
 ## MAIN
+
+Write-Output "Hostname: $env:computername"
+Write-Output "Script revision: $revisionDate"
 
 removeProcesses
 removeRegistryValues
