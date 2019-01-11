@@ -21,7 +21,7 @@ HKU                                Registry      HKEY_USERS
 [*] Task: msntcs - c:\task1.bat
 ```
 
-Run with the "remove" argument to remove the services/tasks/files.
+Run with the *remove* argument to remove the services/tasks/files.
 
 ```
 C:\Users\admin> powershell -executionpolicy bypass -f emotet_trickbot_finder.ps1 remove
