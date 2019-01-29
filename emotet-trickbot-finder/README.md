@@ -4,10 +4,10 @@ This Powershell script is designed to find and remove "common" Emotet and Trickb
 
 _Many thanks to the Bytes Computer & Network Solutions team, this script is based on their work._
 
-**By default, the script will only display the services, tasks, and files it finds.**
+**This must be run from an administrative command prompt. By default, the script will only display the services, tasks, and files it finds.**
 
 ```
-C:\Users\admin> powershell -executionpolicy bypass -f emotet_trickbot_finder.ps1
+C:\> powershell -executionpolicy bypass -f c:\users\user\downloads\emotet_trickbot_finder.ps1
 [*] Looking for process by name: mssvca
 [*] Process: mssvca.exe (mssvca) - c:\windows\mssvca.exe
 
@@ -21,10 +21,10 @@ HKU                                Registry      HKEY_USERS
 [*] Task: msntcs - c:\task1.bat
 ```
 
-Run with the **remove** argument to remove the services/tasks/files. **This must be run from an administrative command prompt.**
+Run with the **remove** argument to remove the services/tasks/files.
 
 ```
-C:\Users\admin> powershell -executionpolicy bypass -f emotet_trickbot_finder.ps1 remove
+C:\> powershell -executionpolicy bypass -f c:\users\user\downloads\emotet_trickbot_finder.ps1 remove
 [*] Looking for process by name: mssvca
 [*] Process: mssvca.exe (mssvca) - c:\windows\mssvca.exe
 VERBOSE: Performing operation "Stop-Process" on Target "mssvca (3320)".
