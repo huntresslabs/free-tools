@@ -95,7 +95,7 @@ $badProcesses += Get-Process | ? { $_.Path -match '\\mswvc\.exe' }
 $badProcesses += Get-Process | ? { $_.Path -match '\\mtwvc\.exe' }
 
 # Trickbot scheduled task names regex
-$badTasks = 'msnetcs|msntcs|sysnetsf|MsSystemWatcher|netsys|WinDotNet'
+$badTasks = 'msnetcs|msntcs|sysnetsf|MsSystemWatcher|netsys|WinDotNet|CleanMemoryWinTask'
 
 
 
