@@ -57,16 +57,17 @@
 Param([String]$remove)
 
 # simplistic versioning
-$revisionDate = '12 December 2018'
+$revisionDate = '13 February 2019'
 
 ##############################################################################
 ## Add known Emotet/Trickbot files, services, scheduled tasks, etc. below
 
-# various files to remove
+# Known Trickbot file names to remove
 $filesToRemove = @(
     'c:\stsvc.exe',
     'c:\mswvc.exe',
-    'c:\mtwvc.exe'
+    'c:\mtwvc.exe',
+    'c:\smver.exe'
 )
 
 # Run Key values to remove, string matching
@@ -95,7 +96,7 @@ $badProcesses += Get-Process | ? { $_.Path -match '\\mswvc\.exe' }
 $badProcesses += Get-Process | ? { $_.Path -match '\\mtwvc\.exe' }
 
 # Trickbot scheduled task names regex
-$badTasks = 'msnetcs|msntcs|sysnetsf|MsSystemWatcher|netsys|WinDotNet|CleanMemoryWinTask'
+$badTasks = 'msnetcs|msntcs|sysnetsf|MsSystemWatcher|netsys|WinDotNet|CleanMemoryWinTask|DefragWinSysTask'
 
 
 
