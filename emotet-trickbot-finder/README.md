@@ -1,10 +1,10 @@
 ### PowerShell script for finding and removing Emotet and Trickbot footholds
 
-This [PowerShell script](https://raw.githubusercontent.com/huntresslabs/free-tools/master/emotet-trickbot-finder/emotet-trickbot-finder.ps1) is designed to find and remove "common" Emotet and Trickbot footholds (services, scheduled tasks, etc.). The script can be modified to include new footholds you may encounter.
+This [PowerShell script](https://raw.githubusercontent.com/huntresslabs/free-tools/master/emotet-trickbot-finder/emotet-trickbot-finder.ps1) is designed to find and remove common Emotet and Trickbot footholds (services, scheduled tasks, etc.). The script can be modified to include new footholds you may encounter.
 
 _Many thanks to the Bytes Computer & Network Solutions team, this script is based on their work._
 
-**This must be run from an administrative command prompt. By default, the script will only display the services, tasks, and files it finds.**
+**This must be run from an administrative command prompt (cmd.exe). By default, the script will only display the services, tasks, and files it finds.**
 
 ```
 C:\> powershell -executionpolicy bypass -f c:\users\user\downloads\emotet_trickbot_finder.ps1
@@ -21,7 +21,7 @@ HKU                                Registry      HKEY_USERS
 [*] Task: msntcs - c:\task1.bat
 ```
 
-Run with the **remove** argument to remove the services/tasks/files.
+Run with the **remove** argument to have the script remove the services/tasks/files.
 
 ```
 C:\> powershell -executionpolicy bypass -f c:\users\user\downloads\emotet_trickbot_finder.ps1 remove
