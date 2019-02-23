@@ -84,6 +84,9 @@ $badServices += Get-Service | ? { $_.name -match '^[0-9]{6,20}$' }
 # Add Trickbot services, match the display name
 $badServices += Get-Service | ? { $_.DisplayName -match '^NewService' }
 $badServices += Get-Service | ? { $_.DisplayName -match '^Service-Log' }
+$badServices += Get-Service | ? { $_.DisplayName -match '^ServiceTechnoMS' }
+$badServices += Get-Service | ? { $_.DisplayName -match '^ControlServiceW' }
+
 # **** Add the service commands we send here ****
 
 # processes to terminate, initialize array
@@ -96,7 +99,7 @@ $badProcesses += Get-Process | ? { $_.Path -match '\\mswvc\.exe' }
 $badProcesses += Get-Process | ? { $_.Path -match '\\mtwvc\.exe' }
 
 # Trickbot scheduled task names regex
-$badTasks = 'msnetcs|msntcs|sysnetsf|MsSystemWatcher|netsys|WinDotNet|CleanMemoryWinTask|DefragWinSysTask'
+$badTasks = 'msnetcs|msntcs|sysnetsf|MsSystemWatcher|netsys|WinDotNet|CleanMemoryWinTask|DefragWinSysTask|WinNetworkTask'
 
 
 
