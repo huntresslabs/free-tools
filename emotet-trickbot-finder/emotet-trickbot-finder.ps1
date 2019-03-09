@@ -67,7 +67,8 @@ $filesToRemove = @(
     'c:\stsvc.exe',
     'c:\mswvc.exe',
     'c:\mtwvc.exe',
-    'c:\smver.exe'
+    'c:\smver.exe',
+    'c:\wines.exe'
 )
 
 # Run Key values to remove, string matching
