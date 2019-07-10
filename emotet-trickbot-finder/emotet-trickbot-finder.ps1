@@ -87,6 +87,9 @@ $badServices += Get-Service | ? { $_.DisplayName -match '^NewService' }
 $badServices += Get-Service | ? { $_.DisplayName -match '^Service-Log' }
 $badServices += Get-Service | ? { $_.DisplayName -match '^ServiceTechnoMS' }
 $badServices += Get-Service | ? { $_.DisplayName -match '^ControlServiceW' }
+$badServices += Get-Service | ? { $_.DisplayName -match '^NService' }
+$badServices += Get-Service | ? { $_.DisplayName -match '^AdvanceMService' }
+$badServices += Get-Service | ? { $_.DisplayName -match '^NControlService' }
 
 # **** Add the service commands we send here ****
 
@@ -100,7 +103,7 @@ $badProcesses += Get-Process | ? { $_.Path -match '\\mswvc\.exe' }
 $badProcesses += Get-Process | ? { $_.Path -match '\\mtwvc\.exe' }
 
 # Trickbot scheduled task names regex
-$badTasks = 'msnetcs|msntcs|sysnetsf|MsSystemWatcher|netsys|WinDotNet|CleanMemoryWinTask|DefragWinSysTask|WinNetworkTask|ApplicationNetwork'
+$badTasks = 'msnetcs|msntcs|sysnetsf|MsSystemWatcher|netsys|WinDotNet|CleanMemoryWinTask|DefragWinSysTask|WinNetworkTask|ApplicationNetwork|Ms Dll libraries'
 
 
 
