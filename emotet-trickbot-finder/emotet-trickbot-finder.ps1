@@ -91,6 +91,9 @@ $badServices += Get-Service | ? { $_.DisplayName -match '^NService' }
 $badServices += Get-Service | ? { $_.DisplayName -match '^AdvanceMService' }
 $badServices += Get-Service | ? { $_.DisplayName -match '^NControlService' }
 
+$badServices += Get-Service | ? { $_.DisplayName -match '^ControlSysWallService' }
+$badServices += Get-Service | ? { $_.DisplayName -match '^ControlServiceWall' }
+
 # **** Add the service commands we send here ****
 
 # processes to terminate, initialize array
