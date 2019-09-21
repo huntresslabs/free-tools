@@ -57,7 +57,7 @@
 Param([String]$remove)
 
 # simplistic versioning
-$revisionDate = '13 February 2019'
+$revisionDate = '21 September 2019'
 
 ##############################################################################
 ## Add known Emotet/Trickbot files, services, scheduled tasks, etc. below
@@ -245,3 +245,4 @@ removeRegistryValues
 removeFiles
 removeServices
 removeTasks
+Write-Output "Done!"
