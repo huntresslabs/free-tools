@@ -4,9 +4,14 @@ This [PowerShell script](https://raw.githubusercontent.com/huntresslabs/free-too
 
 _Many thanks to the Bytes Computer & Network Solutions team, this script is based on their work._
 
-**This script is unsupported and is provided as-is.**
+**The script is unsupported and is provided as-is.**
 
-**This must be run from an administrative command prompt (cmd.exe). By default, the script will only display the services, tasks, and files it finds.**
+Notes:
+* The script must be run with **administrative privileges**. 
+* By default, the script will only display the services, tasks, and files it finds. There is no output if it finds nothing.
+* The script uses `schtasks.exe` to get a list of scheduled tasks. If the Task Scheduler service is not running, `schtasks.exe` will diplay `ERROR: The network address is invalid.`
+
+#### Usage
 
 ```
 C:\> powershell -executionpolicy bypass -f c:\users\user\downloads\emotet_trickbot_finder.ps1
