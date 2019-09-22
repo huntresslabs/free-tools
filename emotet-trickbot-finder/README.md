@@ -1,17 +1,17 @@
-### PowerShell script for finding and removing Emotet and Trickbot footholds
+## PowerShell script for finding and removing Emotet and Trickbot footholds
 
-This [PowerShell script](https://raw.githubusercontent.com/huntresslabs/free-tools/master/emotet-trickbot-finder/emotet-trickbot-finder.ps1) is designed to find and remove common Emotet and Trickbot footholds (services, scheduled tasks, etc.). The script can be modified to include new footholds you may encounter.
+This [PowerShell script](https://raw.githubusercontent.com/huntresslabs/free-tools/master/emotet-trickbot-finder/emotet-trickbot-finder.ps1) is designed to identify (and optionally remove) common Emotet and Trickbot footholds (services, scheduled tasks, etc.). The script can be modified to include new footholds you may encounter.
 
 _Many thanks to the Bytes Computer & Network Solutions team, this script is based on their work._
 
 **The script is unsupported and is provided as-is.**
 
-Notes:
+### Notes
 * The script must be run with **administrative privileges**. 
 * By default, the script will only display the services, tasks, and files it finds. There is no output if it finds nothing.
 * The script uses `schtasks.exe` to get a list of scheduled tasks. If the Task Scheduler service is not running, `schtasks.exe` will diplay `ERROR: The network address is invalid.`
 
-#### Usage
+### Usage
 
 ```
 C:\> powershell -executionpolicy bypass -f c:\users\user\downloads\emotet_trickbot_finder.ps1
