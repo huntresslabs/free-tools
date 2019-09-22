@@ -83,16 +83,18 @@ $badServices = @()
 $badServices += Get-Service | ? { $_.name -match '^[0-9]{6,20}$' }
 
 # Add Trickbot services, match the display name
+$badServices += Get-Service | ? { $_.DisplayName -match '^AdvanceMService' }
+$badServices += Get-Service | ? { $_.DisplayName -match '^ControlServiceW' }
+$badServices += Get-Service | ? { $_.DisplayName -match '^ControlServiceWall' }
+$badServices += Get-Service | ? { $_.DisplayName -match '^ControlSysWallService' }
+$badServices += Get-Service | ? { $_.DisplayName -match '^NControlService' }
 $badServices += Get-Service | ? { $_.DisplayName -match '^NewService' }
+$badServices += Get-Service | ? { $_.DisplayName -match '^NService' }
 $badServices += Get-Service | ? { $_.DisplayName -match '^Service-Log' }
 $badServices += Get-Service | ? { $_.DisplayName -match '^ServiceTechnoMS' }
-$badServices += Get-Service | ? { $_.DisplayName -match '^ControlServiceW' }
-$badServices += Get-Service | ? { $_.DisplayName -match '^NService' }
-$badServices += Get-Service | ? { $_.DisplayName -match '^AdvanceMService' }
-$badServices += Get-Service | ? { $_.DisplayName -match '^NControlService' }
-
-$badServices += Get-Service | ? { $_.DisplayName -match '^ControlSysWallService' }
-$badServices += Get-Service | ? { $_.DisplayName -match '^ControlServiceWall' }
+$badServices += Get-Service | ? { $_.DisplayName -match '^SystemVsService' }
+$badServices += Get-Service | ? { $_.DisplayName -match '^TopVsSystemService' }
+$badServices += Get-Service | ? { $_.DisplayName -match '^VsTechniceService' }
 
 # processes to terminate, initialize array
 $badProcesses = @()
@@ -104,9 +106,7 @@ $badProcesses += Get-Process | ? { $_.Path -match '\\mswvc\.exe' }
 $badProcesses += Get-Process | ? { $_.Path -match '\\mtwvc\.exe' }
 
 # Trickbot scheduled task names regex
-$badTasks = 'msnetcs|msntcs|sysnetsf|MsSystemWatcher|netsys|WinDotNet|CleanMemoryWinTask|DefragWinSysTask|WinNetworkTask|ApplicationNetwork|Ms Dll libraries'
-
-
+$badTasks = 'msnetcs|msntcs|sysnetsf|MsSystemWatcher|netsys|WinDotNet|CleanMemoryWinTask|DefragWinSysTask|WinNetworkTask|ApplicationNetwork|Ms Dll libraries|Ms Cloud Lan|iCloud Free Disk'
 
 ##############################################################################
 ## helper functions
