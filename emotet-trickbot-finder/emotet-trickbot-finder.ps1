@@ -95,6 +95,10 @@ $badServices += Get-Service | ? { $_.DisplayName -match '^ServiceTechnoMS' }
 $badServices += Get-Service | ? { $_.DisplayName -match '^SystemVsService' }
 $badServices += Get-Service | ? { $_.DisplayName -match '^TopVsSystemService' }
 $badServices += Get-Service | ? { $_.DisplayName -match '^VsTechniceService' }
+$badServices += Get-Service | ? { $_.DisplayName -match '^ControlServiceXQ' }
+$badServices += Get-Service | ? { $_.DisplayName -match '^ControlServiceXc' }
+$badServices += Get-Service | ? { $_.DisplayName -match '^ControlSystemXQService' }
+$badServices += Get-Service | ? { $_.DisplayName -match '^QeControlService' }
 
 # processes to terminate, initialize array
 $badProcesses = @()
