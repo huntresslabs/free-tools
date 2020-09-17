@@ -71,14 +71,14 @@ SetDWordValue $PoliciesExplorerKey "NoDriveTypeAutorun" 0xFF
 ## 8.8 - Devices - Detect - Enable Command-Line Audit Logging
 # Log the content of all PowserShell script blocks.
 # https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_logging_windows?view=powershell-7
-LogMessage "Enabling PowerShell script block logging"
-$ScriptBlockLoggingKey = "HKLM:Software\Policies\Microsoft\Windows\PowerShell\ScriptBlockLogging"
-if ( ! (Test-Path $ScriptBlockLoggingKey) )
-{
-    New-Item -Path "HKLM:Software\Policies\Microsoft\Windows\PowerShell" -Name "ScriptBlockLogging"
-}
-SetDWordValue $ScriptBlockLoggingKey "EnableScriptBlockLogging" 1
-SetDWordValue $ScriptBlockLoggingKey "EnableScriptBlockInvocationLogging" 1
+# LogMessage "Enabling PowerShell script block logging"
+# $ScriptBlockLoggingKey = "HKLM:Software\Policies\Microsoft\Windows\PowerShell\ScriptBlockLogging"
+# if ( ! (Test-Path $ScriptBlockLoggingKey) )
+# {
+#    New-Item -Path "HKLM:Software\Policies\Microsoft\Windows\PowerShell" -Name "ScriptBlockLogging"
+# }
+# SetDWordValue $ScriptBlockLoggingKey "EnableScriptBlockLogging" 1
+# SetDWordValue $ScriptBlockLoggingKey "EnableScriptBlockInvocationLogging" 1
 
 # Command line audit processing
 # https://docs.microsoft.com/en-us/windows-server/identity/ad-ds/manage/component-updates/command-line-process-auditing
